@@ -1,0 +1,456 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<!-- Link library leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+crossorigin="" />
+
+ <!-- W3 CSS template -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+
+ <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+crossorigin="">
+</script>
+
+ <style>
+#mapid {
+height: 800px;
+}
+</style>
+
+ <title>Tourist map</title>
+</head>
+<body>
+<!-- แบ่งหน้าจอ -->
+<div class="w3-row">
+        <div id="mapid" class="w3-half"></div>
+        <div id="content" class="w3-half">
+            <table class="w3-table w3-striped">
+                <tr>
+                    <th>ชื่อแหล่งท่องเที่ยว</th>
+                    <th>ประเภท</th>
+                    <th>ระดับ</th>
+                </tr>
+                <tr>
+                    <td>น้ำตก A</td>
+                    <td>ธรรมชาติ</td>
+                    <td>A</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+<!-- เรียกแผนที่ขึ้นมาแสดง -->
+<script>
+var map = L.map("mapid").setView([13.001395, 101.075010],10);
+//based map1
+var osm = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Specialty/DeLorme_World_Base_Map/MapServer/tile/{z}/{y}/{x}")
+           .addTo(map);
+//baesd map2
+var gsat = L.tileLayer("https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}")
+            .addTo(map);
+//group layers (1+2)
+var baseMaps ={
+//ชื่อชั้นข้อมูล:ตัวแปร
+OSM:osm,
+GoogleSat:gsat
+};
+var tourpoint = {
+type: "FeatureCollection",
+name: "tour_plk",
+crs: {
+type: "name",
+properties: { name: "urn:ogc:def:crs:OGC:1.3:CRS84" },
+},
+features: [
+{
+type: "Feature",
+properties: {
+Name: "แกรนด์แคนยอน ชลบุรี",
+Type: "อุทยานและวนอุทยาน",
+FID_1: 1358.0,
+CHANGWAT: "ชลบุรี",
+PROVINCE_1: "Chonburi",
+REGION: "ภาคตะวันออก",
+level: "A",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[100.97380854421453,13.324007962797364]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "สถาบันวิทยาศาสตร์ทางทะเล มหาวิทยาลัยบูรพา",
+Type: "พิพิธภัณฑ์สัตว์น้ำ",
+FID_1: 1358.1,
+CHANGWAT: "ชลบุรี",
+PROVINCE_1: "Chonburi",
+REGION: "ภาคตะวันออก",
+level: "A",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[100.92514304345868,13.285049524464057]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "หาดบางแสน",
+Type: "ชายหาด",
+FID_1: 1362.0,
+CHANGWAT: "ชลบุรี",
+PROVINCE_1: "Chonburi",
+REGION: "ภาคตะวันออก",
+level: "A",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[100.91509320951602,13.283431490944013]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "สวนสัตว์เปิดเขาเขียว",
+Type: "สวนสัตว์เปิด",
+FID_1: 1364.0,
+CHANGWAT: "ชลบุรี",
+PROVINCE_1: "Chonburi",
+REGION: "ภาคตะวันออก",
+level: "A",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[101.05718693295475,13.220447208878785]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "อุทยานหินล้านปีและฟาร์มจระเข้พัทยา",
+Type: "อุทยานและวนอุทยาน",
+FID_1: 1355.0,
+CHANGWAT: "ชลบุรี",
+PROVINCE_1: "Chonburi",
+REGION: "ภาคตะวันออก",
+level: "A",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[100.94179291595152,12.958298823689093]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "ถนนคนเดินพัทยา",
+Type: "สถานที่ท่องเที่ยว",
+FID_1: 1365.0,
+CHANGWAT: "ชลบุรี",
+PROVINCE_1: "Chonburi",
+REGION: "ภาคตะวันออก",
+level: "A",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[100.87467422731531,12.927440792694682]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "หาดพัทยา",
+Type: "ชายหาด",
+FID_1: 733.0,
+CHANGWAT: "ชลบุรี",
+PROVINCE_1: "Chonburi",
+REGION: "ภาคตะวันออก",
+level: "A",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[100.87976427886422,12.932499634439687, ]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "หมู่บ้านช้างพัทยา",
+Type: "สถานที่ท่องเที่ยว",
+FID_1: 1359.0,
+CHANGWAT: "ชลบุรี",
+PROVINCE_1: "Chonburi",
+REGION: "ภาคตะวันออก",
+level: "B",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[100.93899803446004,12.913407366989597, ]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "Flower Land Pattaya(ฟลาวเวอร์แลนด์ พัทยา)",
+Type: "สถานที่ท่องเที่ยว",
+FID_1: 603.0,
+CHANGWAT: "ชลบุรี",
+PROVINCE_1: "Chonburi",
+REGION: "ภาคตะวันออก",
+level: "B",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[100.9547564872839,12.919656235888903, ]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "อันเดอร์วอเตอร์ เวิลด์ พัทยา",
+Type: "พิพิธภัณฑ์สัตว์น้ำ",
+FID_1: 611.0,
+CHANGWAT: "ชลบุรี",
+PROVINCE_1: "Chonburi",
+REGION: "ภาคตะวันออก",
+level: "B",
+},
+geometry: { type: "MultiPoint", coordinates: [[100.89591073637274,12.897090466156643, ]] },
+},
+{
+type: "Feature",
+properties: {
+Name: "HARBORLAND PATTAYA",
+Type: "สวนสนุก",
+FID_1: 1370.0,
+CHANGWAT: "ชลบุรี",
+PROVINCE_1: "Chonburi",
+REGION: "ภาคตะวันออก",
+level: "A",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[100.89737789896493,12.933484221898084, ]],
+},
+},
+],
+};
+//add maeker and popup
+var tourLayer = L.geoJSON(tourpoint, {
+pointToLayer: function (feature, latlng) {
+return L.marker(latlng).bindPopup(feature.properties.Name);
+},
+onEachFeature: function (feature, layer) {
+layer.on("mouseover", function () {
+document
+.getElementById(feature.properties.FID_1)
+.classList.add("w3-red");
+});
+
+ layer.on("mouseout", function () {
+document
+.getElementById(feature.properties.FID_1)
+.classList.remove("w3-red");
+});
+},
+}).addTo(map);
+
+var cont = "";
+cont += "<table class='w3-table w3-striped'>";
+cont += "<tr>";
+cont += "<th>ชื่อแหล่งท่องเที่ยว</th>";
+cont += "<th>ประเภท</th>";
+cont += "<th>ระดับ</th>";
+cont += "</tr>";
+for (let i in tourpoint.features) {
+cont += "<tr id=" + tourpoint.features[i].properties.FID_1 + ">";
+cont += "<td>" + tourpoint.features[i].properties.Name + "</td>";
+cont += "<td>" + tourpoint.features[i].properties.Type + "</td>";
+cont += "<td>" + tourpoint.features[i].properties.level + "</td>";
+cont += "</tr>";
+}
+cont += "</table>";
+console.log(cont);
+document.getElementById("content").innerHTML = cont;
+
+var polygonGeoJson = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "stroke": "#555555",
+        "stroke-width": 2,
+        "stroke-opacity": 1,
+        "fill": "#ff8af5",
+        "fill-opacity": 0.5
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              100.986328125,
+              13.382939689016359
+            ],
+            [
+              100.98358154296875,
+              13.368243250897299
+            ],
+            [
+              100.96160888671875,
+              13.352209751204438
+            ],
+            [
+              100.93551635742186,
+              13.352209751204438
+            ],
+            [
+              100.92727661132811,
+              13.346865014577924
+            ],
+            [
+              100.89981079101562,
+              13.304102866767076
+            ],
+            [
+              100.8819580078125,
+              13.26534314983734
+            ],
+            [
+              100.92864990234375,
+              13.207860470525487
+            ],
+            [
+              100.90118408203125,
+              13.147689682024183
+            ],
+            [
+              100.8709716796875,
+              13.099542418228534
+            ],
+            [
+              100.88470458984375,
+              13.072789867328419
+            ],
+            [
+              100.89981079101562,
+              13.024627969202392
+            ],
+            [
+              100.8984375,
+              12.999205411301194
+            ],
+            [
+              100.87646484375,
+              12.989838549012543
+            ],
+            [
+              100.83389282226561,
+              12.906859517826117
+            ],
+            [
+              100.86822509765625,
+              12.830548034893301
+            ],
+            [
+              100.84213256835938,
+              12.764928421880303
+            ],
+            [
+              100.8380126953125,
+              12.723405172327517
+            ],
+            [
+              100.8380126953125,
+              12.651058133703483
+            ],
+            [
+              100.86822509765625,
+              12.644358294649928
+            ],
+            [
+              100.931396484375,
+              12.618897304044024
+            ],
+            [
+              101.12640380859375,
+              12.651058133703483
+            ],
+            [
+              101.2664794921875,
+              12.630958089345915
+            ],
+            [
+              101.47659301757812,
+              12.647038251367578
+            ],
+            [
+              101.52877807617188,
+              12.837242952998404
+            ],
+            [
+              101.52053833007812,
+              13.318803207592538
+            ],
+            [
+              101.44088745117188,
+              13.404314725103253
+            ],
+            [
+              101.25137329101562,
+              13.459079575009808
+            ],
+            [
+              101.00006103515625,
+              13.435038009690745
+            ],
+            [
+              100.986328125,
+              13.382939689016359
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
+
+var polygonLayer = L.geoJSON(polygonGeoJson, {
+style: function (feature) {
+return {fillcolor:'pink',weight: 2,
+        opacity: 1,
+        color: 'red',  //Outline color
+        fillOpacity: 0.4 };
+},
+onEachFeature: function (feature, layer) {
+layer.bindPopup(feature.properties.name);
+layer.on("mouseover", function () {
+layer.openPopup();
+});
+layer.on("mouseout", function () {
+layer.closePopup();
+});
+},
+});
+
+
+//group point+polygon layer
+var overlay = {
+    Popular_Travel_Spot:tourLayer,
+    City_Of_Pattaya:polygonLayer
+};
+
+L.control.layers(baseMaps).addTo(map);
+</script>
+
+</body>
+</html>
